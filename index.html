@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canada Citizenship Calculator — Track Your Days to Citizenship</title>
+<meta name="description" content="Free Canadian citizenship physical presence calculator. Track student, PGWP and PR days, log travel abroad, and find out exactly when you can apply.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- ============================================================
+  GOOGLE ADSENSE — paste your AdSense script tag here once approved
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+============================================================ -->
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #D52B1E; --red-light: #fdf1f0;
+    --navy: #0d1f3c; --navy-mid: #1e3a5f;
+    --slate: #4a5568; --muted: #718096;
+    --border: #e2e8f0; --bg: #f8f9fc; --white: #ffffff;
+    --green: #1a7f4b; --green-light: #eaf7f0;
+    --amber: #b45309; --amber-light: #fef3c7;
+    --blue: #1d4ed8; --blue-light: #eff6ff;
+    --radius: 12px; --radius-sm: 8px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-lg: 0 4px 24px rgba(0,0,0,0.12);
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--navy); min-height: 100vh; font-size: 15px; line-height: 1.6; }
+
+  /* HEADER */
+  .header { background: var(--navy); color: white; padding: 2.5rem 1.5rem 0; text-align: center; position: relative; overflow: hidden; }
+  .header::before { content:''; position:absolute; top:-60px; right:-60px; width:220px; height:220px; background:var(--red); opacity:.12; border-radius:50%; }
+  .header::after  { content:''; position:absolute; bottom:-80px; left:-40px; width:280px; height:280px; background:var(--red); opacity:.07; border-radius:50%; }
+  .maple-icon { width:48px; height:48px; margin:0 auto 1rem; display:block; }
+  .header h1 { font-family:'DM Serif Display',serif; font-size:clamp(1.6rem,4vw,2.4rem); font-weight:400; letter-spacing:-.02em; margin-bottom:.5rem; position:relative; }
+  .header p { font-size:14px; color:rgba(255,255,255,.65); max-width:480px; margin:0 auto 2rem; position:relative; }
+  .flag-stripe { height:4px; background:linear-gradient(90deg,var(--red) 33%,white 33%,white 67%,var(--red) 67%); }
+
+  /* LAYOUT */
+  .container { max-width:860px; margin:0 auto; padding:2rem 1.25rem 4rem; }
+
+  /* AD SLOTS */
+  .ad-slot { background:var(--white); border:1px dashed #d0d8e4; border-radius:var(--radius); text-align:center; padding:1.25rem; margin-bottom:2rem; }
+  .ad-label { font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:.5rem; }
+  .ad-inner { display:flex; align-items:center; justify-content:center; color:#c0c0c0; font-size:12px; }
+
+  /* PHASE CARDS */
+  .phase-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-bottom:2.5rem; }
+  .phase-card { background:var(--white); border-radius:var(--radius); padding:1.25rem; border:1px solid var(--border); box-shadow:var(--shadow); }
+  .phase-dot { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:8px; vertical-align:middle; }
+  .phase-label { font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:.5rem; display:flex; align-items:center; }
+  .phase-rule { font-family:'DM Serif Display',serif; font-size:1.5rem; color:var(--navy); margin-bottom:4px; }
+  .phase-note { font-size:12px; color:var(--muted); line-height:1.5; }
+
+  /* SECTION TITLES */
+  .section-title { font-family:'DM Serif Display',serif; font-size:1.3rem; font-weight:400; color:var(--navy); margin-bottom:1rem; display:flex; align-items:center; gap:10px; }
+  .section-num { width:28px; height:28px; background:var(--navy); color:white; border-radius:50%; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+  /* CARD */
+  .card { background:var(--white); border-radius:var(--radius); padding:1.5rem; border:1px solid var(--border); box-shadow:var(--shadow); margin-bottom:1.5rem; }
+
+  /* FIELDS */
+  .field-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.25rem; }
+  .field { display:flex; flex-direction:column; gap:6px; }
+  .field label { font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--slate); }
+  .field input, .field select {
+    padding:.65rem .9rem; border:1.5px solid var(--border); border-radius:var(--radius-sm);
+    font-family:'DM Sans',sans-serif; font-size:14px; color:var(--navy); background:var(--white);
+    transition:border-color .15s,box-shadow .15s; outline:none; width:100%; -webkit-appearance:none;
+  }
+  .field input:focus, .field select:focus { border-color:var(--navy); box-shadow:0 0 0 3px rgba(13,31,60,.08); }
+  .field-hint { font-size:11px; color:var(--muted); margin-top:2px; }
+
+  /* TRAVEL */
+  .travel-list { display:flex; flex-direction:column; gap:.75rem; margin-bottom:1rem; }
+  .trip-row { display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:.75rem; align-items:end; background:var(--bg); border-radius:var(--radius-sm); padding:1rem; border:1px solid var(--border); animation:fadeIn .2s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+  .trip-del { width:34px; height:34px; border:1.5px solid #f0bcb9; background:#fdf1f0; color:var(--red); border-radius:var(--radius-sm); cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all .15s; flex-shrink:0; }
+  .trip-del:hover { background:var(--red); color:white; border-color:var(--red); }
+  .trip-badge { font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px; letter-spacing:.04em; }
+  .badge-pre   { background:#eff6ff; color:#1d4ed8; }
+  .badge-post  { background:var(--green-light); color:var(--green); }
+  .badge-span  { background:var(--amber-light); color:var(--amber); }
+  .badge-invalid { background:#fee2e2; color:#991b1b; }
+  .empty-travel { text-align:center; padding:1.5rem; color:var(--muted); font-size:13px; border:1.5px dashed var(--border); border-radius:var(--radius-sm); }
+
+  /* BUTTONS */
+  .btn { padding:.6rem 1.2rem; border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; transition:all .15s; border:none; display:inline-flex; align-items:center; gap:6px; letter-spacing:.02em; }
+  .btn-outline { background:transparent; color:var(--navy); border:1.5px solid var(--navy); }
+  .btn-outline:hover { background:var(--navy); color:white; }
+  .calc-btn { width:100%; padding:.85rem; font-size:15px; border-radius:var(--radius); background:var(--red); color:white; margin-top:.5rem; justify-content:center; }
+  .calc-btn:hover { background:#b52318; transform:translateY(-1px); box-shadow:0 4px 12px rgba(213,43,30,.3); }
+
+  /* PARTNER CARDS */
+  .partner-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-bottom:2rem; }
+  .partner-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:.6rem; transition:box-shadow .2s,transform .2s; text-decoration:none; color:inherit; }
+  .partner-card:hover { box-shadow:var(--shadow-lg); transform:translateY(-2px); }
+  .partner-tag { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+  .partner-name { font-weight:600; font-size:15px; color:var(--navy); }
+  .partner-desc { font-size:13px; color:var(--slate); line-height:1.5; flex:1; }
+  .partner-cta { display:inline-flex; align-items:center; gap:5px; font-size:13px; font-weight:600; color:var(--red); margin-top:4px; }
+  .partner-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:2px; }
+
+  /* CONSULT BANNER */
+  .consult-banner { background:var(--navy); color:white; border-radius:var(--radius); padding:2rem 1.5rem; margin-bottom:2rem; position:relative; overflow:hidden; box-shadow:var(--shadow-lg); }
+  .consult-banner::before { content:''; position:absolute; top:-40px; right:-40px; width:180px; height:180px; background:var(--red); opacity:.15; border-radius:50%; }
+  .consult-banner::after  { content:''; position:absolute; bottom:-60px; left:20%; width:200px; height:200px; background:#2563eb; opacity:.08; border-radius:50%; }
+  .consult-inner { position:relative; z-index:1; }
+  .consult-eyebrow { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:.5rem; }
+  .consult-title { font-family:'DM Serif Display',serif; font-size:clamp(1.3rem,3vw,1.8rem); margin-bottom:.5rem; }
+  .consult-sub { font-size:14px; color:rgba(255,255,255,.7); margin-bottom:1.5rem; max-width:520px; line-height:1.6; }
+  .consult-form { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:.75rem; }
+  .consult-form input, .consult-form select {
+    padding:.7rem 1rem; border:1.5px solid rgba(255,255,255,.2); border-radius:var(--radius-sm);
+    background:rgba(255,255,255,.1); color:white; font-family:'DM Sans',sans-serif; font-size:14px;
+    outline:none; transition:border-color .15s,background .15s; width:100%; -webkit-appearance:none;
+  }
+  .consult-form input::placeholder { color:rgba(255,255,255,.45); }
+  .consult-form input:focus, .consult-form select:focus { border-color:rgba(255,255,255,.5); background:rgba(255,255,255,.15); }
+  .consult-form select option { color:var(--navy); background:white; }
+  .consult-submit { padding:.7rem 1.5rem; background:var(--red); color:white; border:none; border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all .15s; white-space:nowrap; }
+  .consult-submit:hover { background:#b52318; transform:translateY(-1px); }
+  .consult-trust { font-size:11px; color:rgba(255,255,255,.4); margin-top:.75rem; }
+  .consult-success { display:none; background:rgba(26,127,75,.25); border:1px solid rgba(26,127,75,.5); border-radius:var(--radius-sm); padding:1rem 1.25rem; color:white; font-size:14px; margin-top:.75rem; line-height:1.6; }
+
+  /* RESULTS */
+  #results { display:none; animation:fadeIn .3s ease; }
+  .progress-section { background:var(--white); border-radius:var(--radius); padding:1.5rem; border:1px solid var(--border); box-shadow:var(--shadow); margin-bottom:1.5rem; }
+  .progress-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:.75rem; }
+  .progress-title { font-family:'DM Serif Display',serif; font-size:1.1rem; }
+  .progress-pct { font-family:'DM Serif Display',serif; font-size:2rem; color:var(--red); }
+  .progress-bar-bg { height:12px; background:var(--bg); border-radius:99px; overflow:hidden; margin-bottom:.5rem; border:1px solid var(--border); }
+  .progress-bar-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--navy),var(--red)); transition:width .8s cubic-bezier(.4,0,.2,1); }
+  .progress-sub { font-size:12px; color:var(--muted); text-align:right; }
+  .metrics-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+  .metric-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:1rem 1.1rem; box-shadow:var(--shadow); text-align:center; }
+  .metric-num { font-family:'DM Serif Display',serif; font-size:2rem; line-height:1; margin-bottom:4px; }
+  .metric-lbl { font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); }
+  .breakdown-card { background:var(--white); border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow); overflow:hidden; margin-bottom:1.5rem; }
+  .breakdown-title { padding:1rem 1.25rem; font-family:'DM Serif Display',serif; font-size:1.1rem; border-bottom:1px solid var(--border); background:var(--bg); }
+  .breakdown-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .breakdown-table th { padding:.7rem 1.25rem; text-align:left; font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border); background:var(--bg); }
+  .breakdown-table td { padding:.75rem 1.25rem; border-bottom:1px solid var(--border); vertical-align:middle; }
+  .breakdown-table tr:last-child td { border-bottom:none; }
+  .breakdown-table tr:hover td { background:#fafbfd; }
+  .eligibility-banner { border-radius:var(--radius); padding:1.5rem; text-align:center; margin-bottom:1.5rem; border:1px solid; }
+  .banner-eligible { background:var(--green-light); border-color:#86efac; }
+  .banner-waiting  { background:#eff6ff; border-color:#bfdbfe; }
+  .banner-emoji { font-size:2rem; margin-bottom:.5rem; }
+  .banner-title { font-family:'DM Serif Display',serif; font-size:1.4rem; margin-bottom:.25rem; }
+  .banner-sub { font-size:13px; color:var(--muted); }
+  .timeline-visual { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--shadow); }
+  .tl-bar-wrap { position:relative; height:40px; margin:1rem 0 .5rem; border-radius:6px; overflow:hidden; background:var(--bg); border:1px solid var(--border); }
+  .tl-segment { position:absolute; top:0; bottom:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:white; overflow:hidden; white-space:nowrap; transition:width .8s ease; }
+  .tl-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); margin-top:4px; }
+  .travel-summary { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1.5rem; box-shadow:var(--shadow); }
+  .disclaimer { background:var(--amber-light); border:1px solid #fcd34d; border-radius:var(--radius); padding:1rem 1.25rem; font-size:12px; color:#78350f; line-height:1.7; }
+  .disclaimer strong { color:#92400e; }
+
+  /* FOOTER */
+  .footer { text-align:center; padding:2rem 1rem; font-size:12px; color:var(--muted); border-top:1px solid var(--border); }
+  .footer a { color:var(--muted); }
+
+  /* PRINT */
+  @media print {
+    .ad-slot,.partner-grid,.consult-banner,.calc-btn,.btn-outline,#travel-form,.phase-grid,.footer { display:none !important; }
+    #results { display:block !important; }
+    body { background:white; }
+  }
+  /* RESPONSIVE */
+  @media (max-width:600px) {
+    .trip-row { grid-template-columns:1fr 1fr; }
+    .metrics-grid { grid-template-columns:1fr 1fr; }
+    .breakdown-table th:nth-child(3),.breakdown-table td:nth-child(3) { display:none; }
+    .consult-form { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <svg class="maple-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 8 L58 30 L80 25 L68 44 L90 52 L70 58 L76 80 L57 68 L58 92 L50 82 L42 92 L43 68 L24 80 L30 58 L10 52 L32 44 L20 25 L42 30 Z" fill="#D52B1E"/>
+  </svg>
+  <h1>Canada Citizenship Calculator</h1>
+  <p>Track your days, plan your path to Canadian citizenship with clarity</p>
+  <div class="flag-stripe"></div>
+</header>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════════════════════
+    AD SLOT 1 · TOP LEADERBOARD · 728×90 desktop / 320×50 mobile
+    Replace the inner comment with your AdSense <ins> tag or a
+    direct sponsor's banner HTML.
+
+    AdSense example:
+      <ins class="adsbygoogle" style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  ══════════════════════════════════════════════════════════ -->
+  <div class="ad-slot">
+    <div class="ad-label">Advertisement</div>
+    <div class="ad-inner" style="min-height:90px;"><!-- AD CODE HERE --><span>Ad space · 728×90</span></div>
+  </div>
+
+  <!-- PHASE EXPLAINER -->
+  <div class="phase-grid">
+    <div class="phase-card">
+      <div class="phase-label"><span class="phase-dot" style="background:#2563eb"></span>Student / PGWP</div>
+      <div class="phase-rule">½ day each</div>
+      <div class="phase-note">Every day as a temp resident (student or PGWP) counts as half a day. Max 365 days credit total from all pre-PR time.</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-label"><span class="phase-dot" style="background:#1a7f4b"></span>Permanent Resident</div>
+      <div class="phase-rule">1 full day</div>
+      <div class="phase-note">After receiving PR, every day in Canada counts in full. This is your primary earning phase.</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-label"><span class="phase-dot" style="background:#D52B1E"></span>Goal</div>
+      <div class="phase-rule">1,095 days</div>
+      <div class="phase-note">You need 1,095 days of physical presence within the 5 years before your citizenship application.</div>
+    </div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="section-title"><div class="section-num">1</div>Your timeline in Canada</div>
+  <div class="card">
+    <div class="field-grid">
+      <div class="field">
+        <label>Date arrived in Canada</label>
+        <input type="date" id="arrivalDate">
+        <div class="field-hint">First day you entered Canada (e.g. as a student)</div>
+      </div>
+      <div class="field">
+        <label>Date PR was granted</label>
+        <input type="date" id="prDate">
+        <div class="field-hint">The date shown on your PR card or COPR document</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="section-title"><div class="section-num">2</div>Trips outside Canada</div>
+  <div class="card" id="travel-form">
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Add every trip outside Canada — before and after getting PR. Days abroad are excluded from your 1,095-day count.</p>
+    <div class="travel-list" id="tripList">
+      <div class="empty-travel">No trips added yet. Click "Add Trip" to log time spent outside Canada.</div>
+    </div>
+    <button class="btn btn-outline" onclick="addTrip()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Trip
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+    AD SLOT 2 · MID-PAGE RECTANGLE · 300×250
+    High-visibility placement between the form and calculate button.
+  ══════════════════════════════════════════════════════════ -->
+  <div class="ad-slot" style="max-width:336px;margin:0 auto 1.5rem;">
+    <div class="ad-label">Advertisement</div>
+    <div class="ad-inner" style="min-height:250px;"><!-- AD CODE HERE --><span>Ad space · 300×250</span></div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="section-title"><div class="section-num">3</div>Calculate</div>
+  <button class="btn calc-btn" onclick="calculate()">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/><path d="M14 16 l2 2 l4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Calculate My Citizenship Eligibility
+  </button>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin:2rem 0 1rem;">
+      <div class="section-title" style="margin:0;">Your Results</div>
+      <button class="btn btn-outline" onclick="window.print()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print / Save PDF
+      </button>
+    </div>
+
+    <div id="eligibilityBanner" class="eligibility-banner"></div>
+
+    <div class="progress-section">
+      <div class="progress-header">
+        <div class="progress-title">Progress toward 1,095 days</div>
+        <div class="progress-pct" id="pctDisplay">0%</div>
+      </div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
+      <div class="progress-sub" id="progressSub"></div>
+    </div>
+
+    <div class="metrics-grid" id="metricsGrid"></div>
+
+    <div class="timeline-visual">
+      <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:.25rem;">Your Canada timeline</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:.5rem;">Proportional view of phases from arrival to today</div>
+      <div class="tl-bar-wrap" id="tlBar"></div>
+      <div class="tl-labels" id="tlLabels"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:.75rem;font-size:12px;">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;background:#2563eb;border-radius:2px;display:inline-block;"></span>Student / PGWP</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;background:#1a7f4b;border-radius:2px;display:inline-block;"></span>Permanent Resident</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;background:#D52B1E;border-radius:2px;display:inline-block;"></span>Abroad (not counted)</span>
+      </div>
+    </div>
+
+    <div class="breakdown-card">
+      <div class="breakdown-title">Phase breakdown</div>
+      <table class="breakdown-table">
+        <thead><tr><th>Phase</th><th>Days present</th><th>Days abroad</th><th>Credit earned</th><th>Notes</th></tr></thead>
+        <tbody id="breakdownBody"></tbody>
+      </table>
+    </div>
+
+    <div id="tripSummarySection" class="travel-summary">
+      <div class="breakdown-title">Trips outside Canada</div>
+      <table class="breakdown-table">
+        <thead><tr><th>Destination / Note</th><th>Departure</th><th>Return</th><th>Days out</th><th>Phase</th></tr></thead>
+        <tbody id="tripSummaryBody"></tbody>
+      </table>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+      AD SLOT 3 · POST-RESULTS · 728×90
+      Best-performing slot — user has just seen their eligibility
+      date and is highly engaged. Great for immigration services.
+    ══════════════════════════════════════════════════════ -->
+    <div class="ad-slot" style="margin-bottom:2rem;">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-inner" style="min-height:90px;"><!-- AD CODE HERE --><span>Ad space · 728×90</span></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+      CONSULTATION LEAD CAPTURE FORM
+      ──────────────────────────────────────────────────────
+      HOW TO CONNECT LEADS:
+
+      OPTION A — Formspree (free, easiest — 50 submissions/month free):
+        1. Go to formspree.io and create a free account
+        2. Create a new form → copy your Form ID (looks like: xpwzgkrb)
+        3. Replace YOUR_FORMSPREE_ID in the submitConsult() function below
+        4. Leads arrive in your email inbox instantly
+
+      OPTION B — Calendly embed (replace the whole form section):
+        <div class="calendly-inline-widget"
+             data-url="https://calendly.com/YOUR_USERNAME/free-consult"
+             style="min-width:320px;height:500px;"></div>
+        <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+      OPTION C — Sell leads (GoHighLevel, HubSpot, Zapier webhook):
+        Replace the fetch URL in submitConsult() with your webhook endpoint.
+        Immigration leads can fetch $30–$150 USD each.
+    ══════════════════════════════════════════════════════ -->
+    <div class="consult-banner">
+      <div class="consult-inner">
+        <div class="consult-eyebrow">Free · No obligation · Respond within 1 business day</div>
+        <div class="consult-title">Speak with a licensed immigration consultant</div>
+        <div class="consult-sub">Get expert guidance on your citizenship application, documents, and timeline — reviewed by a Regulated Canadian Immigration Consultant (RCIC).</div>
+        <div class="consult-form" id="consultForm">
+          <input type="text"  id="c_name"  placeholder="Your full name"     autocomplete="name">
+          <input type="email" id="c_email" placeholder="Email address"      autocomplete="email">
+          <input type="tel"   id="c_phone" placeholder="Phone (optional)"   autocomplete="tel">
+          <select id="c_topic">
+            <option value="">I need help with…</option>
+            <option>Citizenship application</option>
+            <option>PR renewal / travel document</option>
+            <option>Study or work permit</option>
+            <option>Family sponsorship</option>
+            <option>Other immigration matter</option>
+          </select>
+          <button class="consult-submit" onclick="submitConsult()">Book Free Consultation →</button>
+        </div>
+        <div class="consult-trust">🔒 Your information is kept private and never sold to third parties.</div>
+        <div class="consult-success" id="consultSuccess">
+          ✅ <strong>Request received!</strong> A licensed consultant will reach out within 1 business day to schedule your free consultation.
+        </div>
+      </div>
+    </div>
+
+    <div class="disclaimer" style="margin-bottom:2rem;">
+      <strong>Important:</strong> This calculator is for informational purposes only. It does not account for the 5-year lookback window, protected persons status, special circumstances, or other IRCC considerations. Always verify your eligibility using IRCC's official physical presence calculator at <strong>canada.ca</strong> and consult a licensed RCIC or immigration lawyer before submitting your application.
+    </div>
+  </div><!-- /results -->
+
+  <!-- ══════════════════════════════════════════════════════
+    AFFILIATE / PARTNER RESOURCE CARDS
+    ──────────────────────────────────────────────────────
+    HOW TO USE:
+      1. Replace href="#" on each card with your affiliate or
+         referral tracking link.
+      2. Add rel="noopener sponsored" to affiliate links.
+      3. Remove cards for services you don't have partners for.
+      4. Add cards for other relevant services (phone plans,
+         health insurance, housing, etc.)
+      5. Label paid placements "Sponsored" per ad standards.
+  ══════════════════════════════════════════════════════ -->
+  <div style="margin-top:3rem;">
+    <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:.25rem;">Helpful resources</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">Tools and services commonly needed on the path to citizenship</p>
+    <div class="partner-grid">
+
+      <a class="partner-card" href="#" target="_blank" rel="noopener sponsored">
+        <!-- ↑ REPLACE href WITH YOUR IELTS/CELPIP AFFILIATE LINK -->
+        <div class="partner-icon" style="background:#eff6ff;">📝</div>
+        <div class="partner-tag">Language test · Affiliate</div>
+        <div class="partner-name">IELTS / CELPIP Prep</div>
+        <div class="partner-desc">Citizenship requires proof of English or French proficiency. Prepare with official practice tests and study courses.</div>
+        <div class="partner-cta">Start preparing →</div>
+      </a>
+
+      <a class="partner-card" href="#" target="_blank" rel="noopener sponsored">
+        <!-- ↑ REPLACE href WITH YOUR IMMIGRATION LAWYER REFERRAL LINK -->
+        <div class="partner-icon" style="background:#eaf7f0;">⚖️</div>
+        <div class="partner-tag">Legal help · Sponsored</div>
+        <div class="partner-name">Find an Immigration Lawyer</div>
+        <div class="partner-desc">Get a professional review of your application by a verified RCIC or immigration lawyer before you submit.</div>
+        <div class="partner-cta">Find a consultant →</div>
+      </a>
+
+      <a class="partner-card" href="#" target="_blank" rel="noopener sponsored">
+        <!-- ↑ REPLACE href WITH YOUR TRANSLATION SERVICE AFFILIATE LINK -->
+        <div class="partner-icon" style="background:#fef3c7;">🌐</div>
+        <div class="partner-tag">Documents · Affiliate</div>
+        <div class="partner-name">Certified Document Translation</div>
+        <div class="partner-desc">Need foreign documents translated for IRCC? Get certified translations accepted by the government.</div>
+        <div class="partner-cta">Get a free quote →</div>
+      </a>
+
+      <a class="partner-card" href="#" target="_blank" rel="noopener sponsored">
+        <!-- ↑ REPLACE href WITH YOUR NEWCOMER BANKING AFFILIATE LINK -->
+        <div class="partner-icon" style="background:#fdf1f0;">🏦</div>
+        <div class="partner-tag">Finance · Affiliate</div>
+        <div class="partner-name">Newcomer Bank Account</div>
+        <div class="partner-desc">Open a Canadian bank account with no monthly fees for the first year — designed specifically for newcomers.</div>
+        <div class="partner-cta">Open an account →</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+    AD SLOT 4 · BOTTOM LEADERBOARD · 728×90
+    Passive revenue for users who scroll past all content.
+  ══════════════════════════════════════════════════════ -->
+  <div class="ad-slot">
+    <div class="ad-label">Advertisement</div>
+    <div class="ad-inner" style="min-height:90px;"><!-- AD CODE HERE --><span>Ad space · 728×90</span></div>
+  </div>
+
+</div><!-- /container -->
+
+<footer class="footer">
+  <p style="margin-bottom:6px;">For informational purposes only · Always verify with <a href="https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-citizen/eligibility.html" target="_blank" rel="noopener">IRCC's official tools at canada.ca</a></p>
+  <p>© <span id="yr"></span> Canada Citizenship Calculator · Not affiliated with the Government of Canada</p>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+let trips = [];
+
+function addTrip() {
+  trips.push({ id: Date.now(), departure: '', returnDate: '', note: '' });
+  renderTrips();
+}
+function removeTrip(id) {
+  trips = trips.filter(t => t.id !== id);
+  renderTrips();
+}
+function updateTrip(id, field, value) {
+  const t = trips.find(t => t.id === id);
+  if (t) t[field] = value;
+}
+function getTripPhase(trip, prVal) {
+  if (!trip.departure || !trip.returnDate || !prVal) return '';
+  const dep = new Date(trip.departure), ret = new Date(trip.returnDate), pr = new Date(prVal);
+  if (ret < dep) return 'invalid';
+  if (dep < pr && ret <= pr) return 'pre';
+  if (dep >= pr) return 'post';
+  return 'span';
+}
+function renderTrips() {
+  const list = document.getElementById('tripList');
+  const prVal = document.getElementById('prDate').value;
+  if (!trips.length) {
+    list.innerHTML = '<div class="empty-travel">No trips added yet. Click "Add Trip" to log time spent outside Canada.</div>';
+    return;
+  }
+  const pLabels = { pre:'<span class="trip-badge badge-pre">Pre-PR</span>', post:'<span class="trip-badge badge-post">Post-PR</span>', span:'<span class="trip-badge badge-span">Spans PR</span>', invalid:'<span class="trip-badge badge-invalid">Invalid dates</span>', '':'' };
+  list.innerHTML = trips.map(t => {
+    const phase = getTripPhase(t, prVal);
+    const days = (t.departure && t.returnDate && new Date(t.returnDate) > new Date(t.departure))
+      ? Math.round((new Date(t.returnDate) - new Date(t.departure)) / 86400000) + ' days' : '';
+    return `<div class="trip-row">
+      <div class="field"><label>Departure date</label><input type="date" value="${t.departure}" onchange="updateTrip(${t.id},'departure',this.value);renderTrips()"></div>
+      <div class="field"><label>Return date</label><input type="date" value="${t.returnDate}" onchange="updateTrip(${t.id},'returnDate',this.value);renderTrips()"></div>
+      <div class="field"><label>Destination / note</label><input type="text" placeholder="e.g. USA, family visit" value="${t.note}" onchange="updateTrip(${t.id},'note',this.value)"></div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:flex-end;">
+        <span style="font-size:11px;font-weight:600;color:var(--muted);">${days}</span>
+        ${pLabels[phase]}
+        <button class="trip-del" onclick="removeTrip(${t.id})" title="Remove">×</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function daysBetween(d1, d2) { return Math.max(0, Math.round((d2 - d1) / 86400000)); }
+function fmtDate(d) { return d ? d.toLocaleDateString('en-CA', { year:'numeric', month:'short', day:'numeric' }) : '—'; }
+function addDays(date, n) { const d = new Date(date); d.setDate(d.getDate() + n); return d; }
+
+function calculate() {
+  const arrivalVal = document.getElementById('arrivalDate').value;
+  const prVal      = document.getElementById('prDate').value;
+  if (!arrivalVal || !prVal) { alert('Please enter both your arrival date and PR date.'); return; }
+  const arrival = new Date(arrivalVal), prStart = new Date(prVal);
+  const today = new Date(); today.setHours(0,0,0,0);
+  if (prStart <= arrival) { alert('Your PR date must be after your arrival date.'); return; }
+
+  const validTrips = trips.filter(t => t.departure && t.returnDate && new Date(t.returnDate) >= new Date(t.departure));
+  let absentPre = 0, absentPost = 0;
+  const tripDetails = [];
+
+  for (const t of validTrips) {
+    const dep = new Date(t.departure), ret = new Date(t.returnDate);
+    const preOut  = dep < prStart ? daysBetween(dep, ret < prStart ? ret : prStart) : 0;
+    const postOut = ret > prStart ? daysBetween(dep > prStart ? dep : prStart, ret > today ? today : ret) : 0;
+    absentPre  += preOut;
+    absentPost += postOut;
+    tripDetails.push({ note: t.note||'—', departure: dep, returnDate: ret, daysOut: daysBetween(dep, ret), phase: getTripPhase(t, prVal) });
+  }
+
+  const rawPre   = daysBetween(arrival, prStart);
+  const prePresent = Math.max(0, rawPre - absentPre);
+  const preCredit  = Math.min(365, Math.floor(prePresent / 2));
+  const rawPost  = daysBetween(prStart, today);
+  const postPresent = Math.max(0, rawPost - absentPost);
+  const total = preCredit + postPresent;
+  const needed = 1095, remaining = Math.max(0, needed - total);
+  const pct = Math.min(100, Math.round((total / needed) * 100));
+  const eligible = total >= needed;
+  const eligDate = eligible ? null : addDays(today, remaining);
+
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({ behavior:'smooth', block:'start' });
+
+  const banner = document.getElementById('eligibilityBanner');
+  banner.className = 'eligibility-banner ' + (eligible ? 'banner-eligible' : 'banner-waiting');
+  banner.innerHTML = eligible
+    ? `<div class="banner-emoji">🍁</div><div class="banner-title" style="color:var(--green);">You may be eligible to apply!</div><div class="banner-sub">You have <strong>${total.toLocaleString()}</strong> credited days — the 1,095-day requirement is met. Verify with IRCC before applying.</div>`
+    : `<div class="banner-emoji">⏳</div><div class="banner-title" style="color:var(--blue);">Keep building your days</div><div class="banner-sub">Estimated earliest eligibility: <strong>${fmtDate(eligDate)}</strong> — <strong>${remaining.toLocaleString()}</strong> more days of presence needed (assuming continuous stay from today).</div>`;
+
+  setTimeout(() => { document.getElementById('progressBar').style.width = pct + '%'; }, 100);
+  document.getElementById('pctDisplay').textContent = pct + '%';
+  document.getElementById('progressSub').textContent = `${total.toLocaleString()} of 1,095 credited days accumulated`;
+
+  document.getElementById('metricsGrid').innerHTML = `
+    <div class="metric-card"><div class="metric-num" style="color:#2563eb;">${preCredit}</div><div class="metric-lbl">Pre-PR credit</div></div>
+    <div class="metric-card"><div class="metric-num" style="color:var(--green);">${postPresent}</div><div class="metric-lbl">Post-PR days</div></div>
+    <div class="metric-card"><div class="metric-num" style="color:var(--navy);">${total}</div><div class="metric-lbl">Total credited</div></div>
+    <div class="metric-card"><div class="metric-num" style="color:${remaining>0?'var(--red)':'var(--green)'};">${remaining}</div><div class="metric-lbl">${remaining>0?'Days remaining':'Goal reached'}</div></div>
+    <div class="metric-card"><div class="metric-num" style="color:var(--red);font-size:1.4rem;">${absentPre+absentPost}</div><div class="metric-lbl">Days abroad</div></div>`;
+
+  const span = daysBetween(arrival, today) || 1;
+  const p1 = Math.round((rawPre / span) * 100), p2 = Math.round((rawPost / span) * 100);
+  document.getElementById('tlBar').innerHTML =
+    `<div class="tl-segment" style="left:0;width:${p1}%;background:#2563eb;opacity:.85;">${p1>10?'Student/PGWP':''}</div>` +
+    `<div class="tl-segment" style="left:${p1}%;width:${p2}%;background:#1a7f4b;opacity:.85;">${p2>6?'PR':''}</div>`;
+  document.getElementById('tlLabels').innerHTML =
+    `<span>${fmtDate(arrival)}</span><span>PR: ${fmtDate(prStart)}</span><span>Today: ${fmtDate(today)}</span>`;
+
+  document.getElementById('breakdownBody').innerHTML = `
+    <tr>
+      <td><span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#2563eb;flex-shrink:0;"></span>Student / PGWP (temp)</span></td>
+      <td><strong>${prePresent.toLocaleString()}</strong> days</td><td>${absentPre.toLocaleString()}</td>
+      <td><strong style="color:#2563eb;">${preCredit}</strong></td><td style="font-size:12px;color:var(--muted);">Half-day · max 365</td>
+    </tr>
+    <tr>
+      <td><span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#1a7f4b;flex-shrink:0;"></span>Permanent Resident</span></td>
+      <td><strong>${postPresent.toLocaleString()}</strong> days</td><td>${absentPost.toLocaleString()}</td>
+      <td><strong style="color:#1a7f4b;">${postPresent}</strong></td><td style="font-size:12px;color:var(--muted);">Full-day credit</td>
+    </tr>
+    <tr style="background:#fafbfd;font-weight:500;">
+      <td><strong>Total</strong></td><td><strong>${(prePresent+postPresent).toLocaleString()}</strong></td>
+      <td>${(absentPre+absentPost).toLocaleString()}</td>
+      <td><strong style="color:var(--navy);font-size:1.1em;">${total}</strong> / 1,095</td><td></td>
+    </tr>`;
+
+  if (!tripDetails.length) {
+    document.getElementById('tripSummarySection').style.display = 'none';
+  } else {
+    document.getElementById('tripSummarySection').style.display = 'block';
+    const pl = { pre:'Pre-PR', post:'Post-PR', span:'Spans PR', invalid:'Invalid', '':'—' };
+    const pc = { pre:'badge-pre', post:'badge-post', span:'badge-span', invalid:'badge-invalid', '':'' };
+    document.getElementById('tripSummaryBody').innerHTML = tripDetails.map(t =>
+      `<tr><td>${t.note}</td><td>${fmtDate(t.departure)}</td><td>${fmtDate(t.returnDate)}</td>
+       <td><strong>${t.daysOut}</strong></td><td><span class="trip-badge ${pc[t.phase]}">${pl[t.phase]}</span></td></tr>`
+    ).join('');
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+  CONSULTATION FORM HANDLER
+  ── To activate: replace YOUR_FORMSPREE_ID with your real ID
+  ── Get one free at formspree.io (no backend needed)
+══════════════════════════════════════════════════════════ */
+async function submitConsult() {
+  const name  = document.getElementById('c_name').value.trim();
+  const email = document.getElementById('c_email').value.trim();
+  const phone = document.getElementById('c_phone').value.trim();
+  const topic = document.getElementById('c_topic').value;
+  if (!name || !email) { alert('Please enter your name and email address.'); return; }
+  if (!/\S+@\S+\.\S+/.test(email)) { alert('Please enter a valid email address.'); return; }
+  const btn = document.querySelector('.consult-submit');
+  btn.textContent = 'Sending…'; btn.disabled = true;
+  try {
+    /* ── Replace YOUR_FORMSPREE_ID with your actual Formspree form ID ── */
+    const res = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name, email, phone, topic })
+    });
+    if (res.ok) {
+      document.getElementById('consultForm').style.display = 'none';
+      document.getElementById('consultSuccess').style.display = 'block';
+    } else { throw new Error(); }
+  } catch {
+    btn.textContent = 'Book Free Consultation →'; btn.disabled = false;
+    alert('Something went wrong. Please try again.');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('prDate').addEventListener('change', renderTrips);
+  const y = new Date().getFullYear();
+  document.getElementById('arrivalDate').value = `${y-3}-01-15`;
+  document.getElementById('prDate').value      = `${y}-01-15`;
+});
+</script>
+</body>
+</html>

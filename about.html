@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Canada Citizenship Calculator</title>
+<meta name="description" content="About the Canada Citizenship Calculator — a free, independent tool for tracking physical presence days toward Canadian citizenship eligibility.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6975305079230294" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --red:#D52B1E; --navy:#0d1f3c; --slate:#4a5568; --muted:#718096; --border:#e2e8f0; --bg:#f8f9fc; --white:#fff; --radius:12px; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--navy); font-size:15px; line-height:1.7; }
+  .header { background:var(--navy); color:white; padding:2.5rem 1.5rem 1.5rem; text-align:center; }
+  .header h1 { font-family:'DM Serif Display',serif; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:400; }
+  .header p { font-size:14px; color:rgba(255,255,255,.65); margin-top:.5rem; }
+  .flag-stripe { height:4px; background:linear-gradient(90deg,var(--red) 33%,white 33%,white 67%,var(--red) 67%); margin-top:1.5rem; }
+  .container { max-width:760px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+  .card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:2rem; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h2 { font-family:'DM Serif Display',serif; font-size:1.4rem; font-weight:400; margin:1.75rem 0 .6rem; color:var(--navy); }
+  h2:first-child { margin-top:0; }
+  p { color:var(--slate); margin-bottom:.9rem; }
+  a { color:var(--red); }
+  .nav { text-align:center; padding:1rem; font-size:13px; }
+  .nav a { color:var(--muted); margin:0 10px; text-decoration:none; }
+  .nav a:hover { color:var(--navy); }
+  .footer { text-align:center; padding:2rem 1rem; font-size:12px; color:var(--muted); border-top:1px solid var(--border); }
+  .footer a { color:var(--muted); margin:0 8px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <h1>About This Tool</h1>
+  <p>Why we built the Canada Citizenship Calculator</p>
+  <div class="flag-stripe"></div>
+</header>
+
+<nav class="nav">
+  <a href="/">Calculator</a> · <a href="/about.html">About</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact.html">Contact</a>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <h2>Our story</h2>
+    <p>The Canada Citizenship Calculator was built by someone who went through the Canadian immigration process themselves. Counting physical presence days is one of the most confusing parts of applying for citizenship, especially for people who moved to Canada as students or on a work permit and only later became permanent residents. IRCC's official calculator is excellent, but it asks for a lot of information up front and doesn't really help you <em>plan</em> — it just tells you whether a specific application date would work.</p>
+    <p>We wanted something different: a tool you can use early in the process, before you have a final application date in mind. A tool that shows you not only whether you're eligible today, but also how many more days you need, when you might reach the threshold, and how each trip abroad affects your timeline.</p>
+
+    <h2>What this calculator does</h2>
+    <p>The calculator applies the standard Canadian citizenship physical presence rules. You need 1,095 days of physical presence in Canada within the five years immediately before the day you sign your application. Days you spent in Canada as a temporary resident (student, worker, visitor, or protected person) before becoming a permanent resident count as half a day each, up to a maximum of 365 days. Days you spent in Canada after becoming a permanent resident count as one full day each. The calculator lets you enter every trip outside Canada so that time abroad is correctly excluded from both phases.</p>
+
+    <h2>What this calculator is not</h2>
+    <p>This is an informational tool, not legal advice. It is not affiliated with the Government of Canada, IRCC, or any licensed immigration consultant. Some situations are genuinely complex — Crown servants, children of Crown servants, people with time in Canadian prison, people with removal orders, and people whose residency was interrupted by circumstances outside their control all have special rules that a simple calculator cannot capture. Before you submit any application, always verify your numbers using IRCC's official physical presence calculator on canada.ca and, if your situation is at all unusual, talk to a Regulated Canadian Immigration Consultant (RCIC) or an immigration lawyer.</p>
+
+    <h2>How we make money</h2>
+    <p>We want to be upfront about this. The calculator is and will always be free to use. The site pays for itself through two small revenue streams: display advertising (Google AdSense) and affiliate links to services that many people going through the immigration process will need anyway — language test prep, certified document translation, newcomer banking, and referrals to licensed immigration consultants. Affiliate and sponsored links are clearly labelled. We only list services we believe are legitimate and genuinely useful.</p>
+    <p>We do not sell your information. The data you enter into the calculator never leaves your browser. If you voluntarily submit the consultation form, it goes directly to a form delivery service so that a licensed RCIC can contact you — nothing else.</p>
+
+    <h2>Feedback</h2>
+    <p>If you spot a bug, think the calculator is giving you the wrong answer, or want to suggest an improvement, please get in touch through the <a href="/contact.html">contact page</a>. We read every message.</p>
+  </div>
+</div>
+
+<footer class="footer">
+  <p><a href="/">Calculator</a> · <a href="/about.html">About</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact.html">Contact</a></p>
+  <p style="margin-top:6px;">© <span id="yr"></span> Canada Citizenship Calculator · Not affiliated with the Government of Canada</p>
+</footer>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

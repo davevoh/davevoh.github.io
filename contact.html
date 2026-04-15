@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Canada Citizenship Calculator</title>
+<meta name="description" content="Get in touch with the Canada Citizenship Calculator team with questions, feedback, or corrections.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6975305079230294" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --red:#D52B1E; --navy:#0d1f3c; --slate:#4a5568; --muted:#718096; --border:#e2e8f0; --bg:#f8f9fc; --white:#fff; --radius:12px; --radius-sm:8px; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--navy); font-size:15px; line-height:1.7; }
+  .header { background:var(--navy); color:white; padding:2.5rem 1.5rem 1.5rem; text-align:center; }
+  .header h1 { font-family:'DM Serif Display',serif; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:400; }
+  .header p { font-size:14px; color:rgba(255,255,255,.65); margin-top:.5rem; }
+  .flag-stripe { height:4px; background:linear-gradient(90deg,var(--red) 33%,white 33%,white 67%,var(--red) 67%); margin-top:1.5rem; }
+  .container { max-width:760px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+  .card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:2rem; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h2 { font-family:'DM Serif Display',serif; font-size:1.4rem; font-weight:400; margin:1.75rem 0 .6rem; color:var(--navy); }
+  h2:first-child { margin-top:0; }
+  p { color:var(--slate); margin-bottom:.9rem; }
+  a { color:var(--red); }
+  .nav { text-align:center; padding:1rem; font-size:13px; }
+  .nav a { color:var(--muted); margin:0 10px; text-decoration:none; }
+  .nav a:hover { color:var(--navy); }
+  .footer { text-align:center; padding:2rem 1rem; font-size:12px; color:var(--muted); border-top:1px solid var(--border); }
+  .footer a { color:var(--muted); margin:0 8px; }
+  form { display:flex; flex-direction:column; gap:1rem; margin-top:1rem; }
+  label { font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--slate); }
+  input, textarea { padding:.7rem .9rem; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:14px; color:var(--navy); background:var(--white); outline:none; width:100%; }
+  input:focus, textarea:focus { border-color:var(--navy); box-shadow:0 0 0 3px rgba(13,31,60,.08); }
+  textarea { min-height:140px; resize:vertical; }
+  button { padding:.8rem 1.5rem; background:var(--red); color:white; border:none; border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; align-self:flex-start; }
+  button:hover { background:#b52318; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <h1>Contact</h1>
+  <p>Questions, feedback, and corrections</p>
+  <div class="flag-stripe"></div>
+</header>
+
+<nav class="nav">
+  <a href="/">Calculator</a> · <a href="/about.html">About</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact.html">Contact</a>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <h2>Get in touch</h2>
+    <p>We read every message and do our best to respond within a few business days. Before you write to us, please note that we cannot give personal immigration advice — we are not licensed consultants or lawyers. For your own application, please consult a Regulated Canadian Immigration Consultant (RCIC) or an immigration lawyer.</p>
+    <p>We do welcome messages about:</p>
+    <p style="padding-left:1rem;">• Bugs or incorrect calculations<br>
+    • Suggestions for new features<br>
+    • Corrections to our explanations of the physical presence rules<br>
+    • Press and partnership enquiries<br>
+    • General feedback about the site</p>
+
+    <h2>Send a message</h2>
+    <form action="https://formspree.io/f/mvzdgppr" method="POST">
+      <div>
+        <label for="name">Your name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div>
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject">
+      </div>
+      <div>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <button type="submit">Send message</button>
+    </form>
+    <p style="font-size:12px; color:var(--muted); margin-top:1rem;">Your message is delivered through Formspree. See our <a href="/privacy.html">privacy policy</a> for details on how we handle your information.</p>
+  </div>
+</div>
+
+<footer class="footer">
+  <p><a href="/">Calculator</a> · <a href="/about.html">About</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact.html">Contact</a></p>
+  <p style="margin-top:6px;">© <span id="yr"></span> Canada Citizenship Calculator · Not affiliated with the Government of Canada</p>
+</footer>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

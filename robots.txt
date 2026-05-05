@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://davevoh.github.io/sitemap.xml
